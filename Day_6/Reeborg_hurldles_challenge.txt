@@ -1,0 +1,17 @@
+def hurdles():
+    move()
+    turn_left()
+    move()
+    turn_left()
+    turn_left()
+    turn_left()
+    move()
+    turn_left()
+    turn_left()
+    turn_left()
+    move()
+    turn_left()
+for i in range(0,6):
+    hurdles()
+
+### Tutor used to functions turn right and jump, calling right inside of jump.  Only saved herself 1 line of code.

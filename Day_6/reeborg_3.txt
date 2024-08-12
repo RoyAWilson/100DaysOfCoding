@@ -1,0 +1,6 @@
+def home():
+    for i in range(0,2):
+        move()
+    turn_left()
+    move()
+home()
