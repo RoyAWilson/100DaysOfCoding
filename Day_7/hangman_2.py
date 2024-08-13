@@ -6,13 +6,13 @@ import random
 
 words: list = ['aardvark', 'baboon', 'camel']
 
-# Choose a rangom word
+# Choose a random word
 
 choice: int = random.randint(0, len(words)-1)
 chosen_word = words[choice]
 
 print(chosen_word)
-print()
+print('_' * len(chosen_word))
 
 # Guess a letter and lower case it:
 
@@ -24,15 +24,19 @@ def guess():
     '''
 
     guessed_letter = input('Please guess a letter (a to z):  >').lower()
+    # Add while loop to check that input is in face a letter and nothing else
+    while guessed_letter not in 'abcdefghijklmnopqrstuvwxyz':
+        print('Please enter letters only\n\n')
+        guessed_letter = input('Please guess a letter (a to z):  >').lower()
     return guessed_letter
 
 
-# print(guess())
+# make the below code blocks function/s
 z: str = guess()
 # set up the dashes
 dashes: list = []
 for i in range(0, len(chosen_word)):
-    dashes.append('-')
+    dashes.append('_')
 prnt: str = ''
 # Determine if guessed letter appears in the word:
 if z in chosen_word:
@@ -48,4 +52,5 @@ else:
 # Make the list a string:
 for k in range(0, len(chosen_word)):
     prnt += dashes[k]
+# Print the letter and dashes, upper cased the letters to make it easier to read for the user.
 print(prnt.upper())
