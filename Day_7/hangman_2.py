@@ -6,6 +6,60 @@ import random
 
 words: list = ['aardvark', 'baboon', 'camel']
 
+# Ascii Art:
+
+pix = ['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''',
+       '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========''']
+
 # Choose a random word
 
 choice: int = random.randint(0, len(words)-1)
@@ -29,13 +83,15 @@ def guess():
         print(f'Congratulation! You have guessed that the word was {
               chosen_word}!')
         exit()
-    else:
+    elif len(guessed_letter) > 1 and guessed_letter != chosen_word:
         print(f'Sorry, {guessed_letter} is not the correct word')
         return guessed_letter
-    while guessed_letter not in 'abcdefghijklmnopqrstuvwxyz':
-        print('Please enter letters only\n\n')
-        guessed_letter = input('Please guess a letter (a to z):  >').lower()
-    return guessed_letter
+    else:
+        while guessed_letter not in 'abcdefghijklmnopqrstuvwxyz':
+            print('Please enter letters only\n\n')
+            guessed_letter = input(
+                'Please guess a letter (a to z):  >').lower()
+        return guessed_letter
 
 # set up the dashes
 
@@ -77,14 +133,19 @@ z: str = guess()
 prnt = determine()
 print(prnt.upper())
 
-counter: int = 0
-
-while prnt != chosen_word and counter < 11:
-    counter += 1
+pic_count: int = 0
+while prnt != chosen_word and pic_count < 6:
+    print(pix[pic_count])
     z: str = guess()
     prnt = determine()
+    print(pix[pic_count])
     print(prnt.upper())
-if prnt == chosen_word and counter < 11:
-    print(f'Congratulation! You have guessed that the word was {chosen_word}!')
-else:
-    print(f'Sorry you lose! the word was {chosen_word}!')
+    if prnt == chosen_word:
+        print(f'Congratulation! You have guessed that the word was {
+            chosen_word}!')
+        print(prnt.upper())
+    else:
+        print(f'Sorry you lose! the word was {chosen_word}!')
+        # pic_count += 1
+    if z not in chosen_word:
+        pic_count += 1
