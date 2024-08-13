@@ -134,7 +134,7 @@ prnt = determine()
 print(prnt.upper())
 
 pic_count: int = 0
-while prnt != chosen_word and pic_count < 6:
+while prnt != chosen_word and pic_count <= 5:
     print(pix[pic_count])
     z: str = guess()
     prnt = determine()
@@ -144,8 +144,8 @@ while prnt != chosen_word and pic_count < 6:
         print(f'Congratulation! You have guessed that the word was {
             chosen_word}!')
         print(prnt.upper())
-    else:
-        print(f'Sorry you lose! the word was {chosen_word}!')
-        # pic_count += 1
-    if z not in chosen_word:
+    elif z not in chosen_word:
         pic_count += 1
+if pic_count >= 6:
+    print(pix[6])
+    print('You Lose!')
