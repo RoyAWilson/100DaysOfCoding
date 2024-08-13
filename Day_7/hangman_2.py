@@ -30,27 +30,54 @@ def guess():
         guessed_letter = input('Please guess a letter (a to z):  >').lower()
     return guessed_letter
 
+# set up the dashes
+
+
+def place_holder():
+    dash: list = []
+    for i in range(0, len(chosen_word)):
+        dash.append('_')
+    return dash
+
+
+dashes: list = place_holder()
+# word: str = ''
 
 # make the below code blocks function/s
-z: str = guess()
-# set up the dashes
-dashes: list = []
-for i in range(0, len(chosen_word)):
-    dashes.append('_')
-prnt: str = ''
 # Determine if guessed letter appears in the word:
-if z in chosen_word:
-    print('Congratulations, you have found a letter in the word!')
-    # add letter to the dashes list:
-    for j in range(0, len(chosen_word)):
-        if chosen_word[j] == z:
-            dashes[j] = z
 
-else:
-    print('Sorry, that letter is not in the word!')
 
-# Make the list a string:
-for k in range(0, len(chosen_word)):
-    prnt += dashes[k]
+def determine():
+    word: str = ''
+    if z in chosen_word:
+        print('Congratulations, you have found a letter in the word!')
+        # add letter to the dashes list:
+        for j in range(0, len(chosen_word)):
+            if chosen_word[j] == z:
+                dashes[j] = z
+
+    else:
+        print('Sorry, that letter is not in the word!')
+
+    # Make the list a string:
+    for k in range(0, len(chosen_word)):
+        word += dashes[k]
+    return word
+
+
 # Print the letter and dashes, upper cased the letters to make it easier to read for the user.
+z: str = guess()
+prnt = determine()
 print(prnt.upper())
+
+counter: int = 0
+
+while prnt != chosen_word and counter < 11:
+    counter += 1
+    z: str = guess()
+    prnt = determine()
+    print(prnt.upper())
+if prnt == chosen_word and counter < 11:
+    print(f'Congratulation! You have guessed that the word was {chosen_word}!')
+else:
+    print(f'Sorry you lose! the word was {chosen_word}!')
