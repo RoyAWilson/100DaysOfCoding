@@ -25,6 +25,13 @@ def guess():
 
     guessed_letter = input('Please guess a letter (a to z):  >').lower()
     # Add while loop to check that input is in face a letter and nothing else
+    if guessed_letter == chosen_word:
+        print(f'Congratulation! You have guessed that the word was {
+              chosen_word}!')
+        exit()
+    else:
+        print(f'Sorry, {guessed_letter} is not the correct word')
+        return guessed_letter
     while guessed_letter not in 'abcdefghijklmnopqrstuvwxyz':
         print('Please enter letters only\n\n')
         guessed_letter = input('Please guess a letter (a to z):  >').lower()
