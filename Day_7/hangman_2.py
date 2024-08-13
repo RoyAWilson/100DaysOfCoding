@@ -148,4 +148,4 @@ while prnt != chosen_word and pic_count <= 5:
         pic_count += 1
 if pic_count >= 6:
     print(pix[6])
-    print('You Lose!')
+    print(f'You Lose! The word was {chosen_word.upper()}')
