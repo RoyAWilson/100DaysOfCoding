@@ -4,7 +4,8 @@ To implement a simple version of hangman game
 
 import random
 
-words: list = ['aardvark', 'baboon', 'camel']
+words: list = ['aardvark', 'baboon', 'camel', 'lion', 'tiger',
+               'hyena', 'giraffe', 'sloth', 'alligator', 'bear', 'racoon']
 
 # Ascii Art:
 
@@ -80,8 +81,10 @@ def guess():
     guessed_letter = input('Please guess a letter (a to z):  >').lower()
     # Add while loop to check that input is in face a letter and nothing else
     if guessed_letter == chosen_word:
+        print('**********************************************************************************')
         print(f'Congratulation! You have guessed that the word was {
-              chosen_word}!')
+              chosen_word.upper()}!')
+        print('**********************************************************************************')
         exit()
     elif len(guessed_letter) > 1 and guessed_letter != chosen_word:
         print(f'Sorry, {guessed_letter} is not the correct word')
@@ -141,11 +144,20 @@ while prnt != chosen_word and pic_count <= 5:
     print(pix[pic_count])
     print(prnt.upper())
     if prnt == chosen_word:
+        print('**********************************************************************************')
         print(f'Congratulation! You have guessed that the word was {
-            chosen_word}!')
-        print(prnt.upper())
+            chosen_word.upper()}!')
+        print('**********************************************************************************')
     elif z not in chosen_word:
         pic_count += 1
+        print('*******************************************')
+        print(f'* You have {6 - pic_count} lives left! Use them wisely! *')
+        print('*******************************************')
 if pic_count >= 6:
     print(pix[6])
+    print('*******************************************************')
     print(f'You Lose! The word was {chosen_word.upper()}')
+    print('*******************************************************')
+
+# Tutor also talks about importing the word list and the pictures rather than building them into the code
+# However, the resources on Udemy seem to not have the required files.
