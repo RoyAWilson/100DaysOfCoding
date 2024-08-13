@@ -65,7 +65,7 @@ pix = ['''
 choice: int = random.randint(0, len(words)-1)
 chosen_word = words[choice]
 
-print(chosen_word)
+# print(chosen_word)
 print('_' * len(chosen_word))
 
 # Guess a letter and lower case it:
