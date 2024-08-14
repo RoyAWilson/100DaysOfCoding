@@ -100,6 +100,9 @@ def guess():
 
 
 def place_holder():
+    '''
+    Build the dasshes
+    '''
     dash: list = []
     for i in range(0, len(chosen_word)):
         dash.append('_')
@@ -114,6 +117,8 @@ dashes: list = place_holder()
 
 
 def determine():
+    '''Determine whether letter in word if so add it, if not retain the dash
+    '''
     word: str = ''
     if z in chosen_word:
         print('Congratulations, you have found a letter in the word!')
