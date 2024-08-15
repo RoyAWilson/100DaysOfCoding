@@ -60,7 +60,6 @@ def encrypt(msg, shft_by) -> str:
             if pos_in_alpha + shft_by > 25:
                 # Tutor uses modulo! Didn't even occur to me! =%!
                 pos_in_alpha = (pos_in_alpha + shft_by) - 26
-                print(pos_in_alpha)
                 encd += Alpha_lower[pos_in_alpha]
             elif pos_in_alpha + shft_by < 25:
                 pos_in_alpha += shft_by
@@ -113,7 +112,7 @@ def decrypt(msg, shft_by):
 # print(z)
 
 
-print('WELCOM TO THE CASAR CYPER ENCRYPTOR/DECRYPTOR\n\n')
+print('WELCOME TO THE CAESAR CYPER ENCRYPTOR/DECRYPTOR\n\n')
 
 enc_dec = ''
 while enc_dec != 'encrypt' and enc_dec != 'decrypt':
