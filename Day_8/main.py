@@ -7,7 +7,7 @@ Did this one on Giles\' also
 # Alphabets for cyphering:
 
 Alpha_lower: list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-                     'l', 'm', 'n', 'o', 'p', 'q', 'r', 's' 't', 'u', 'v', 'w', 'x', 'y', 'z']
+                     'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 Alpha_upper: list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
                      'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -58,7 +58,9 @@ def encrypt(msg, shft_by) -> str:
         if char in Alpha_lower:
             pos_in_alpha = Alpha_lower.index(char)
             if pos_in_alpha + shft_by > 25:
-                pos_in_alpha = pos_in_alpha + shft_by - 25
+                # Tutor uses modulo! Didn't even occur to me! =%!
+                pos_in_alpha = (pos_in_alpha + shft_by) - 26
+                print(pos_in_alpha)
                 encd += Alpha_lower[pos_in_alpha]
             elif pos_in_alpha + shft_by < 25:
                 pos_in_alpha += shft_by
@@ -66,7 +68,7 @@ def encrypt(msg, shft_by) -> str:
         elif char in Alpha_upper:
             pos_in_alpha = Alpha_upper.index(char)
             if pos_in_alpha + shft_by > 25:
-                pos_in_alpha = pos_in_alpha + shft_by - 25
+                pos_in_alpha = pos_in_alpha + shft_by - 26
                 encd += Alpha_upper[pos_in_alpha]
             elif pos_in_alpha + shft_by < 26:
                 pos_in_alpha += shft_by
@@ -79,16 +81,55 @@ def encrypt(msg, shft_by) -> str:
     return encd
 
 
+def decrypt(msg, shft_by):
+    encd = ''
+    pos_in_alpha: int = 0
+    for char in msg:
+        if char in Alpha_lower:
+            pos_in_alpha = Alpha_lower.index(char)
+            if pos_in_alpha - shft_by < 0:
+                pos_in_alpha = pos_in_alpha - shft_by + 26
+                encd += Alpha_lower[pos_in_alpha]
+            elif pos_in_alpha - shft_by >= 0:
+                pos_in_alpha -= shft_by
+                encd += Alpha_lower[pos_in_alpha]
+        elif char in Alpha_upper:
+            pos_in_alpha = Alpha_upper.index(char)
+            if pos_in_alpha - shft_by < 0:
+                pos_in_alpha = pos_in_alpha - shft_by + 26
+                encd += Alpha_upper[pos_in_alpha]
+            elif pos_in_alpha + shft_by >= 0:
+                pos_in_alpha -= shft_by
+                encd += Alpha_upper[pos_in_alpha]
+            # If necessary enter code here to shift numerals and other characteers.
+        else:
+            encd += char
+
+    return encd
+
 # x = 'Hello World!'
 # y = 5
 # z = encrypt(x, y)
 # print(z)
 
+
+print('WELCOM TO THE CASAR CYPER ENCRYPTOR/DECRYPTOR\n\n')
+
+enc_dec = ''
+while enc_dec != 'encrypt' and enc_dec != 'decrypt':
+    enc_dec = input('Do you want to encrypt or decrypt a message? \n')
+
 to_enc = message()
 shift = get_shift()
-new_msg = encrypt(to_enc, shift)
 
-print('Your encrypted message reads:\n\n')
+if enc_dec == 'encrypt':
+    new_msg = encrypt(to_enc, shift)
+    print()
+    print('Your encrypted message reads:\n\n')
+else:
+    # new_msg = decrypt(to_enc, shift)
+    new_msg = decrypt(to_enc, shift)
+
 print('*' * (len(new_msg)+4))
 print(f'* {new_msg} *')
 print('*' * (len(new_msg)+4))
