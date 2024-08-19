@@ -89,31 +89,47 @@ def hit(plyr_hnd, bnk_hnd):
 DECK = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
 
-dealt: list = deal_hand(DECK)
-player_hand: str = str(dealt[0])
-bank_hand: str = str(dealt[1][1:])
-player_score: int = int(sum(dealt[0]))
-bank_score: int = int(sum(dealt[1]))
+def start_game():
+    dealt: list = deal_hand(DECK)
+    player_hand: str = str(dealt[0])
+    bank_hand: str = str(dealt[1][1:])
+    out = [dealt, player_hand, bank_hand]
+    print(f'************************************\nYou have been dealt: {
+        player_hand}\n************************************\n\n')
+    print(f'_______________________\nBank hand  {
+        bank_hand}\n_______________________\n')
+    return out
 
-print(f'************************************\nYou have been dealt: {
-    player_hand}\n************************************\n\n')
-print(f'_______________________\nBank hand  {
-    bank_hand}\n_______________________\n')
 
-stnd_hit = input('Do you want to \'stand\' or \'hit\'? > ')
+play = True
+while play is True:
+    game = start_game()
+    dealt = game[0]
+    player_hand = game[1]
+    bank_hand = game[2]
 
-while stnd_hit == 'hit':
-    while bank_score <= 13:
-        dealt[1].append(DECK[random.randint(1, 11)])
+    player_score: int = int(sum(dealt[0]))
+    bank_score: int = int(sum(dealt[1]))
+    stnd_hit = input('Do you want to \'stand\' or \'hit\'? > ')
+
+    while stnd_hit == 'hit':
+        while bank_score <= 13:
+            dealt[1].append(DECK[random.randint(1, 11)])
+            bank_score = int(sum(dealt[1]))
+        updated_hands = hit(dealt[0], dealt[1])
+        player_score = int(sum(dealt[0]))
         bank_score = int(sum(dealt[1]))
-    updated_hands = hit(dealt[0], dealt[1])
+        print(updated_hands[0], updated_hands[1])
+        stnd_hit = input('Do you want to \'stand\' or \'hit\'? > ')
     player_score = int(sum(dealt[0]))
     bank_score = int(sum(dealt[1]))
-    print(updated_hands[0], updated_hands[1])
-    stnd_hit = input('Do you want to \'stand\' or \'hit\'? > ')
-player_score = int(sum(dealt[0]))
-bank_score = int(sum(dealt[1]))
-print(f'\n\n*******************************************************\nYour final hand:  {dealt[0]}, scoring {
-      player_score}\n\nbank final hand: {dealt[1]}  giving a final score of {bank_score}\n*******************************************************\n\n')
-message = win_lose(player_score, bank_score)
-print(message)
+    message = win_lose(player_score, bank_score)
+    print(f'\n\n*******************************************************\nYour final hand:  {dealt[0]}, scoring {
+        player_score}\n\nbank final hand: {dealt[1]}  giving a final score of {bank_score}\n\n{message}\n*******************************************************\n\n')
+
+    print(message)
+    play = input('Play again? y/n? > ').lower()
+    if play == 'n':
+        play = False
+    else:
+        play = True
