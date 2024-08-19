@@ -20,8 +20,6 @@ No inputs
 
 import random
 
-# TODO DEFINE PLAY FUNCTION(S)
-
 
 def deal_hand(dck) -> tuple:
     '''
@@ -40,101 +38,82 @@ def deal_hand(dck) -> tuple:
     return player_hand, bank_hand
 
 
-def in_play(plyr_hand, bnk_hnd, dck) -> tuple:
-    '''
-    To deal further cards if necessary
-    arguments: plyr_hand LIST hand, bnk_stnd LIST, dck LIST
+# def in_play(plyr_hand, bnk_hnd, dck) -> tuple:
+#     '''
+#     To deal further cards if necessary
+#     arguments: plyr_hand LIST hand, bnk_stnd LIST, dck LIST
 
-    '''
-    plyr_hand.append(dck[random.randint(0, 12)])
-    bnk_hnd.append(dck[random.randint(0, 12)])
-    return plyr_hand, bnk_hnd
-
-
-def stand(p_total, b_total) -> None:
-    if b_total > 21:
-        print('You Win!!! The bank went bust!')
-    if b_total < 17:
-        b_hand.append(DECK[random.randint(0, 13)])
-        b_total = int(sum(b_hand))
-        if b_total > 21:
-            print('You Win!!! The bank went bust!')
-    if b_total < p_total:
-        print('You Win!!!')
-    if b_total > p_total:
-        print(f'You Lose the bank had {b_total}')
-    if b_total == p_total:
-        print('There is a DRAW!')
+#     '''
+#     plyr_hand.append(dck[random.randint(0, 12)])
+#     bnk_hnd.append(dck[random.randint(0, 12)])
+#     return plyr_hand, bnk_hnd
 
 
-# TODO DEFINE ADDING UP THE SCORE
+def form_hands(player_hand, bank_hand) -> tuple:
+    plyr_hand = ''
+    bnk_hnd = ''
+    for i in range(0, len(player_hand)):
+        plyr_hand += str(player_hand[i]) + ', '
+    for j in range(1, len(bank_hand)):
+        bnk_hand = str(bank_hand[j]) + ', '
+    print(plyr_hand)
+    return plyr_hand, bnk_hand
 
-# TODO DEINE WIN OR LOSE CRITERIA
 
-# Set up the required lists for the game.
+def win_lose(pscore: int, bscore: int) -> str:
+    mess = ''
+    if pscore > 21:
+        mess = 'You lose! You have gone bust!'
+    elif bscore > 21:
+        mess = 'You win! Bank has gone bust'
+    elif bscore > 21 and pscore > 21:
+        mess = 'You have both gone bust!'
+    elif pscore == bscore:
+        mess = 'There is a draw!'
+    elif bscore > 21 and pscore <= 21:
+        mess = 'You win.  The bank has gone bust!'
+    elif bscore > pscore:
+        mess = 'Bank wins!'
+    elif pscore > bscore:
+        mess = 'You win!'
+    return mess
 
-# The Deck:
+
+def hit(plyr_hnd, bnk_hnd):
+    if sum(dealt[1]) < 17:
+        dealt[1].append(DECK[random.randint(0, 12)])
+    dealt[0].append(DECK[random.randint(0, 12)])
+    return plyr_hnd, bnk_hnd
 
 
-DECK: list = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+DECK = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
-both_hands = deal_hand(DECK)
-p_hand = both_hands[0]
-b_hand = both_hands[1]
 
-print(p_hand, b_hand)
+dealt: list = deal_hand(DECK)
+player_hand: str = str(dealt[0])
+bank_hand: str = str(dealt[1][1:])
+player_score: int = int(sum(dealt[0]))
+bank_score: int = int(sum(dealt[1]))
 
-fmt_hand = ''
-for i in range(0, len(p_hand)):
-    fmt_hand += str(p_hand[i]) + ', '
-print(f'You have been dealt:\n\n*******\n{
-      fmt_hand}\n*******\n\n and the dealer has been dealt:\n++++++\n+ {b_hand[1:len(b_hand)]} + \n++++++')
-p_total = int(sum(p_hand))
-b_total = int(sum(b_hand))
-ht_stnd = input('Do you want to \'HIT\' or \'STAND\'').lower()
-if ht_stnd == 'stand':
-    stand(p_total, b_total)
-    # if b_total > 21:
-    #     print('You Win!!! The bank went bust!')
-    # if b_total < 17:
-    #     b_hand.append(DECK[random.randint(0, 13)])
-    #     b_total = int(sum(b_hand))
-    #     if b_total > 21:
-    #         print('You Win!!! The bank went bust!')
-    # if b_total < p_total:
-    #     print('You Win!!!')
-    # if b_total > p_total:
-    #     print(f'You Lose the bank had {b_total}')
-    # if b_total == p_total:
-    #     print('There is a DRAW!')
+print(f'************************************\nYou have been dealt: {
+    player_hand}\n************************************\n\n')
+print(f'_______________________\nBank hand  {
+    bank_hand}\n_______________________\n')
 
-while ht_stnd == 'hit':
-    play_hit = in_play(p_hand, b_hand, DECK)
-    p_hand = play_hit[0]
-    b_hand = play_hit[1]
-    p_total = int(sum(p_hand))
-    b_total = int(sum(b_hand))
-    fmt_phnd = ''
-    fmt_bhnd = ''
-    for i in range(0, len(p_hand)):
-        fmt_phnd += str(p_hand[i]) + ', '
-    for j in range(1, len(b_hand)):
-        fmt_bhnd += str(b_hand[j]) + ', '
-    print(f'Your hand is now:  {fmt_phnd}\n')
-    ht_stnd = input('Hit or Stand? > ')
+stnd_hit = input('Do you want to \'stand\' or \'hit\'? > ')
 
-p_total = int(sum(p_hand))
-b_total = int(sum(b_hand))
-if b_total < 21:
-    print(f'And the band has:  {b_hand}')
-elif b_total > 21:
-    print(f'The bank has {b_hand}')
-elif b_total > 21 and p_total > 21:
-    print('Yout both went BUST!!!')
-    deal_hand(DECK)
-elif p_total > 21:
-    print('You Lose! You went BUST!!!')
-    deal_hand(DECK)
-elif b_total > 21 and p_total < 21:
-    print('You Win! The bank went BUST!!!')
-    deal_hand(DECK)
+while stnd_hit == 'hit':
+    while bank_score <= 13:
+        dealt[1].append(DECK[random.randint(1, 11)])
+        bank_score = int(sum(dealt[1]))
+    updated_hands = hit(dealt[0], dealt[1])
+    player_score = int(sum(dealt[0]))
+    bank_score = int(sum(dealt[1]))
+    print(updated_hands[0], updated_hands[1])
+    stnd_hit = input('Do you want to \'stand\' or \'hit\'? > ')
+player_score = int(sum(dealt[0]))
+bank_score = int(sum(dealt[1]))
+print(f'\n\n*******************************************************\nYour final hand:  {dealt[0]}, scoring {
+      player_score}\n\nbank final hand: {dealt[1]}  giving a final score of {bank_score}\n*******************************************************\n\n')
+message = win_lose(player_score, bank_score)
+print(message)
