@@ -127,7 +127,6 @@ while play is True:
     print(f'\n\n*******************************************************\nYour final hand:  {dealt[0]}, scoring {
         player_score}\n\nbank final hand: {dealt[1]}  giving a final score of {bank_score}\n\n{message}\n*******************************************************\n\n')
 
-    print(message)
     play = input('Play again? y/n? > ').lower()
     if play == 'n':
         play = False
