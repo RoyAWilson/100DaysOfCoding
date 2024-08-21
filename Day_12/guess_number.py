@@ -47,32 +47,44 @@ def check_guess(num: int, hidden: int) -> str:
     return message
 
 
-system('cls')
-print(num_art.logo)
-print()
-print('*' * 60)
-print(f'Welcome to the guess the number game.\nYou will be asked to guess a number in the range 1 - 100')
-print('*' * 60)
+def play():
+    system('cls')
+    print(num_art.logo)
+    print()
+    print('*' * 60)
+    print(f'Welcome to the guess the number game.\nYou will be asked to guess a number in the range 1 - 100')
+    print('*' * 60)
 
-secret_no = number()
+    secret_no = number()
 
-level: str = input(
-    '\n\nWould you like to play at Hard level 5 guesses, or Easy level 10 guesses? > ').lower()
-if level == 'h':
-    counter = 5
-else:
-    counter = 10
-while counter != 0:
-    guess = int(input('Please enter your guess:  > '))
-    ret: str = check_guess(num=guess, hidden=secret_no)
-    if ret == 'correct':
-        print(f'Amazing!! You guessed correctly I was thinking of {
-              secret_no}.')
-    if ret == 'low':
-        print(f'Your guess, {guess} is too low!\n\n You have {
-              counter - 1} guesses left!')
-    if ret == 'high':
-        print(f'Your guess, {guess} is too high!\n\n You have {
-              counter - 1} guesses left!')
-    counter = counter - 1
-print(f'\n\nThe number I was thinking of was:  {secret_no}')
+    level: str = input(
+        '\n\nWould you like to play at Hard level 5 guesses, or Easy level 10 guesses? > ').lower()
+    if level == 'h':
+        counter = 5
+    else:
+        counter = 10
+    while counter != 0:
+        guess = int(input('Please enter your guess:  > '))
+        ret: str = check_guess(num=guess, hidden=secret_no)
+        if ret == 'correct':
+            print(f'Amazing!! You guessed correctly I was thinking of {
+                secret_no}.')
+            if (input('\n\n\nThat was fun! Would you like to play this game with me again? (y or n) > ')) == 'y':
+                play()
+            else:
+                exit()
+        if ret == 'low':
+            print(f'Your guess, {guess} is too low!\n\n You have {
+                counter - 1} guesses left!')
+        if ret == 'high':
+            print(f'Your guess, {guess} is too high!\n\n You have {
+                counter - 1} guesses left!')
+        counter = counter - 1
+    print(f'\n\nThe number I was thinking of was:  {secret_no}')
+    if (input('\n\n\nThat was fun! Would you like to play this game with me again? (y or n) > ')) == 'y':
+        play()
+    else:
+        exit()
+
+
+play()
