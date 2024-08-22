@@ -53,8 +53,53 @@ def fetch_records(item) -> str:
     return person, followers
 
 
-# Set up variable to hold the score:
-score: int = 0
+def play(scre):
+    # Grab the 2 records required.  should be part of the game logo should print on each screen but the object sting only once.
+
+    first = get_records_nos()
+    account_1 = fetch_records(first[0])
+    account_2 = fetch_records(first[1])
+    acc_1_folls = account_1[1]
+    acc_2_folls = account_2[1]
+    # set up screen for first guess:
+    system('cls')
+    print(art.logo)
+    print(f'Compare A:  {account_1[0]}\n')
+    print(art.vs)
+    print(f'\nAgainst B:  {account_2[0]}')
+    # And get the guess.
+    guess: str = input(
+        '\nWho has the more followers? Type \'A\' or \'B\': > ').lower()
+    if guess == 'a' and acc_1_folls > acc_2_folls:
+        scre += 1
+        system('cls')
+        print(art.logo)
+        print(f'You\'re right! Current score is {scre}')
+        # Would prefer if had keyboard / mouse listener.   Might change to a wait loop.
+        # Added to hold score on screen before cls called, as didn't like the clutter without clearing.
+        input('hit enter ...')
+        play(scre=scre)
+    elif guess == 'b' and acc_2_folls > acc_1_folls:
+        scre += 1
+        system('cls')
+        print(art.logo)
+        print(f'You\'re right! Current score is {scre}')
+        input('hit enter ...')
+        play(scre=scre)
+    elif acc_2_folls == acc_1_folls:
+        scre += 1
+        system('cls')
+        print(art.logo)
+        print('Either choice would be correct, there is a dead heat')
+        input('hit enter ...')
+        play(scre=scre)
+    else:
+        print(f'Sorry that\'s wrong, final score {scre}')
+        if input('Play again (y/n) > ') == 'y':
+            play(scre=0)
+        else:
+            exit()
+
 
 # bring up game logo:
 print(art.logo)
@@ -63,32 +108,7 @@ does the first or second have a higher follower count\nThe figures are in millio
 ask = input('Shall we play? (y/n) > ')
 if ask == 'n':
     exit()
-
-
-# Grab the 2 records required.  should be part of the game logo should print on each screen but the object sting only once.
-
-first = get_records_nos()
-account_1 = fetch_records(first[0])
-account_2 = fetch_records(first[1])
-acc_1_folls = account_1[1]
-acc_2_folls = account_2[1]
-# set up screen for first guess:
-system('cls')
-print(art.logo)
-print(f'Compare A:  {account_1[0]}\n')
-print(art.vs)
-print(f'\nAgainst B:  {account_2[0]}')
-# And get the guess.
-guess: str = input(
-    '\nWho has the more followers? Type \'A\' or \'B\': > ').lower()
-if guess == 'a' and acc_1_folls > acc_2_folls:
-    score += 1
-    print(f'You\'re right! Current score is {score}')
-elif guess == 'b' and acc_2_folls > acc_1_folls:
-    score += 1
-    print(f'You\'re right! Current score is {score}')
-elif acc_2_folls == acc_1_folls:
-    score += 1
-    print('Either choice would be correct, there is a dead heat')
 else:
-    print(f'Sorry that\'s wrong, final score {score}')
+    system('cls')
+    score = 0
+    play(score)
