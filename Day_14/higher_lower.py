@@ -15,8 +15,8 @@ country = country of origin.
 
 from os import system
 from random import randint
-import art
-import game_data
+import art  # ascii art file.
+import game_data  # list of dictionaries.
 
 # print(len(game_data.data)) == 50 but can use len in the randomisation.
 # escape sequences in art.py need fixing. Done
@@ -54,6 +54,10 @@ def fetch_records(item) -> str:
 
 
 def play(scre):
+    '''
+    Takes scre which is the score either 0 at start or accumulated score built up during game.
+    Actually play the game.
+    '''
     # Grab the 2 records required.  should be part of the game logo should print on each screen but the object sting only once.
 
     first = get_records_nos()
