@@ -18,6 +18,8 @@ If enough coins entered calculate change and let user know how much change given
 Should tell user to enjoy their drink.
 
 '''
+
+from os import system
 import decimal
 
 
@@ -187,6 +189,8 @@ CURRENCY: dict = {
 }
 
 # Get first input
+
+system('cls')
 start = True
 while start is True:
     get_start = input('Do you want to order coffee y/n? > ')
