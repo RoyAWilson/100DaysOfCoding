@@ -132,10 +132,10 @@ def payment(costs: float, money: dict, order: str) -> tuple:
             round(decimal.Decimal((paid)), 2)} is not enough to cover.  Your payment will be refunded.'
         trans_paid = False
     elif paid == costs:
-        pay_message = f'Thank you.  Here is your {order}.  Enjoy!'
+        pay_message = f'Thank you.  Here is your {order} ☕.  Enjoy!'
         trans_paid = True
     elif paid > costs:
-        pay_message = f'Thank you.  Here is your {order}.  Enjoy!\nYour change of ${
+        pay_message = f'Thank you.  Here is your {order} ☕.  Enjoy!\nYour change of ${
             round(decimal.Decimal(paid - costs), 2)} will be returned.'
         trans_paid = True
     return pay_message, trans_paid
