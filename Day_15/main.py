@@ -18,14 +18,8 @@ If enough coins entered calculate change and let user know how much change given
 Should tell user to enjoy their drink.
 
 '''
+import decimal
 
-
-# TODO 2. Print report of all current resouces.
-
-# TODO 3. calculate current resources.
-# TODO 4. grab payment and calculate any change required.
-# TODO 5. update resources including adding payment to said resources.
-# TODO 6. Feedback to customer what is missing to fullfil their order.
 
 def prnt_res(curr_resouces: dict) -> str:
     '''
@@ -46,7 +40,7 @@ def get_order() -> str:
     '''
     ordered = input(
         'Please enter your order from one of the following:\nEspresso ($1.50)\nLatte ($2.50)\nCappuccino ($3.00)\n> ').lower()
-    while ordered != 'espresso' and ordered != 'latte' and ordered != 'cappuccino':
+    while ordered != 'espresso' and ordered != 'latte' and ordered != 'cappuccino' and ordered != 'resources' and ordered != 'off':
         ordered = input(
             'Sorry, that option is not on the list.\nPlease enter either:\nEspresso ($1.50)\nLatte ($2.50)\nCappuccino ($3.00)\n> ').lower()
     return ordered
@@ -64,9 +58,10 @@ def coffee_ingredients(cust_order: str) -> dict:
 # Check resources sufficient to make the drink order
 
 
-def res_check(coffee_needs, resources_available, order) -> str:
+def res_check(coffee_needs: dict, resources_available: dict, order: str) -> bool:
     '''
     Check have enough ingredients to make the coffee
+    coffee_needs dict
     '''
     can_make = True
     if order == 'latte' and coffee_needs['ingredients']['water'] > resources_available['water'] or coffee_needs['ingredients']['coffee'] > resources_available['coffee'] or coffee_needs['ingredients']['milk'] > resources_available['milk']:
@@ -75,18 +70,79 @@ def res_check(coffee_needs, resources_available, order) -> str:
         can_make = False
     elif order == 'espresso' and coffee_needs['ingredients']['water'] > resources_available['water'] or coffee_needs['ingredients']['coffee'] > resources_available['coffee']:
         can_make = False
+
     return can_make
+
+# 6. Feedback to customer what is missing to fullfil their order.
+
+
+def missing_ing(resources_available: dict, order: str) -> str:
+    '''
+    Takes resourcs_available - dict, order str returns str of first missing ingredient
+    '''
+    missed = ''
+    if MENU[order]['ingredients']['water'] > resources_available['water']:
+        missed += 'Too little water'
+    elif MENU[order]['ingredients']['coffee'] > resources_available['coffee']:
+        missed += 'Too little coffee'
+    elif MENU[order]['ingredients']['milk'] > resources_available['milk']:
+        missed += 'Too little milk'
+    return missed + ' your money will be refunded'
 
 
 def calc_cost(order_made: str) -> float:
     '''
-    Rakes order_made as string, returns the cost as a float'''
+    Takes order_made as string, returns the cost as a float'''
     cost = MENU[order_made]['cost']
     return float(cost)
 
+# 3. calculate current resources.
+
+
+def calc_resources(order: str, res: dict, ingredients: dict) -> dict:
+    '''
+    Recalculate resources available after order
+    Takes order - string
+    res - dictionary
+    ingredients dict
+    Returns dict of updated resources.
+    '''
+    res['water'] = res['water'] - ingredients[order]['ingredients']['water']
+    res['coffee'] = res['coffee'] - ingredients[order]['ingredients']['coffee']
+    res['milk'] = res['milk'] - ingredients[order]['ingredients']['milk']
+    res['cash'] = res['cash'] + ingredients[order]['cost']
+
+    return res
+
+
+def payment(costs: float, money: dict, order: str) -> tuple:
+    '''
+    To get payment and ensure is enough to cover also make change.
+    costs - float, money dict returns str
+    '''
+    pay_message = ''
+    print(f'Please enter payment of ${costs} :\n')
+    pennies = int(input('Number of pennies: > '))*money['Pennies']
+    nickles = int(input('Number of nickles: > '))*money['Nickles']
+    dimes = int(input('Number of dimes: > '))*money['Dimes']
+    quarters = int(input('Number of quarters: > '))*money['Quarters']
+    paid = pennies + nickles + dimes + quarters
+    if paid < costs:
+        pay_message = f'Sorry ${
+            round(decimal.Decimal((paid)), 2)} is not enough to cover.  Your payment will be refunded.'
+        trans_paid = False
+    elif paid == costs:
+        pay_message = f'Thank you.  Here is your {order}.  Enjoy!'
+        trans_paid = True
+    elif paid > costs:
+        pay_message = f'Thank you.  Here is your {order}.  Enjoy!\nYour change of ${
+            round(decimal.Decimal(paid - costs), 2)} will be returned.'
+        trans_paid = True
+    return pay_message, trans_paid
+
+
 # would make life easier if menu showed espresso milk as needing 0 - decided to change to show milk 0
 # as caused too many problems in availability checking function when not there.
-
 
 MENU: dict = {
     'espresso': {
@@ -120,24 +176,36 @@ RESOURCES: dict = {
     'water': 300,
     'coffee': 100,
     'milk': 200,
-    'cash': 0,
+    'cash': 200,
 }
 
 CURRENCY: dict = {
     'Pennies': 0.01,
-    'Nickels': 0.05,
+    'Nickles': 0.05,
     'Dimes': 0.1,
-    'Quarters': 0.5,
+    'Quarters': 0.25,
 }
 
-
-# Test out functions as write them
-order_string = get_order()
-print(order_string)
-coffee_ing = coffee_ingredients(order_string)
-print(coffee_ing)
-poss = res_check(coffee_ing, RESOURCES, order_string)
-print(RESOURCES)
-print(poss)
-price = calc_cost(order_string)
-print(price)
+# Get first input
+start = True
+while start is True:
+    get_start = input('Do you want to order coffee y/n? > ')
+    if get_start == 'n':
+        exit()
+    ordered = get_order()
+    if ordered == 'resources':
+        print(prnt_res(RESOURCES))
+    elif ordered == 'off':
+        exit()
+    else:
+        check_ingredients = coffee_ingredients(ordered)
+        enough = res_check(check_ingredients, RESOURCES, ordered)
+        if enough == False:
+            missing = missing_ing(RESOURCES, ordered)
+            print(missing)
+        else:
+            to_pay = calc_cost(ordered)
+            pay = payment(to_pay, CURRENCY, ordered)
+            print(pay[0])
+            if pay[1] is True:
+                RESOURCES = calc_resources(ordered, RESOURCES, MENU)
