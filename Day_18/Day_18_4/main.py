@@ -23,8 +23,9 @@ def random_colour() -> tuple:
 directions = [0, 90, 180, 270]
 tim.pensize(5)
 tim.speed('fastest')
+screen = Screen()
 for i in range(1, 201):
     tim.color(random_colour())
     tim.forward(30)
     tim.setheading(random.choice(directions))
-Screen.exitonclick()
+screen.exitonclick()
