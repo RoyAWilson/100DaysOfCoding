@@ -3,6 +3,7 @@ create a painting in the style of Damien Hirst dot paintings
 use colorgram to extract the colors used in a downloaded image.
 Need to paint a painting with 10 x 10 grid of spots
 dots should be around size 20 and spaced by around 50 steps.
+Done without following the lecture.
 '''
 
 import random
@@ -62,6 +63,8 @@ tim.penup()
 tim.setpos(-290, -270)
 tim.pencolor(get_rnd_colour(pallette))
 tim.pensize(20)
+tim.hideturtle()
+tim.speed('fastest')
 
 # get rows drawn:
 
