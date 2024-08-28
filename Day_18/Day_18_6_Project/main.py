@@ -79,4 +79,6 @@ screen.exitonclick()
 
 
 # Tutor created a list of colours and deleted several that she though were background colours then commented out the
-# code to get and make a list of tuples of the colours.
+# code to get and make a list of tuples of the colours.  Also didn't bother with positions, just turned the turtle
+# and tracked it back to the start of next line.
+# Did not define any functions.
