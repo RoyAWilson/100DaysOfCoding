@@ -23,12 +23,21 @@ class Snake():
         Create the snake and set tp starting positions
         '''
         for position in self.STARTING_POSITIONS:
+            self.add_segment(position)
 
-            new_segment = Turtle('square')
-            new_segment.color('white')
-            new_segment.penup()
-            new_segment.setposition(position)
-            self.segments.append(new_segment)
+    def add_segment(self, position):
+
+        new_segment = Turtle('square')
+        new_segment.color('white')
+        new_segment.penup()
+        new_segment.setposition(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        '''
+        Add a new segment to the snake
+        '''
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
         '''
