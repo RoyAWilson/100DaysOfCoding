@@ -26,3 +26,16 @@ class Player(Turtle):
         self.penup()
         self.setpos(STARTING_POSITION[0], STARTING_POSITION[1])
         self.setheading(90)
+        # self.forward(MOVE_DISTANCE)
+        # self.move_player()
+
+    def move_player(self):
+        '''
+        Move player upscreen
+        if player reaches top of screen
+        reset to bottom again
+        '''
+
+        self.forward(10)
+        if self.ycor() == FINISH_LINE_Y:
+            self.setpos(STARTING_POSITION[0], STARTING_POSITION[1])
