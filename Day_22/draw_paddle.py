@@ -7,7 +7,8 @@ from turtle import Turtle
 
 class Paddle(Turtle):
     '''
-    Produce a paddle taking pos a tuple of co-ords to set position'''
+    Produce a paddle taking pos a tuple of co-ords to set position
+    '''
 
     def __init__(self, pos):
         super().__init__()
@@ -17,14 +18,17 @@ class Paddle(Turtle):
         self.shapesize(stretch_len=1, stretch_wid=8)
         self.penup()
         self.setpos(pos)
-        self.go_up
-        self.go_down
 
     def go_up(self):
-
+        '''
+        Implement moving the paddle up the screen
+        '''
         new_y = self.ycor() + 20
         self.goto(self.xcor(), new_y)
 
     def go_down(self):
+        '''
+        Implement moving paddle down the screen
+        '''
         new_y = self.ycor() - 20
         self.goto(self.xcor(), new_y)
