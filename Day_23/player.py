@@ -25,9 +25,8 @@ class Player(Turtle):
         self.shape('turtle')
         self.penup()
         self.setpos(STARTING_POSITION[0], STARTING_POSITION[1])
+        # Tutor didn't split the tupple out but used it as a tuple
         self.setheading(90)
-        # self.forward(MOVE_DISTANCE)
-        # self.move_player()
 
     def move_player(self):
         '''
@@ -36,6 +35,14 @@ class Player(Turtle):
         reset to bottom again
         '''
 
-        self.forward(10)
+        self.forward(MOVE_DISTANCE)
+
+    def crossed(self):
         if self.ycor() == FINISH_LINE_Y:
-            self.setpos(STARTING_POSITION[0], STARTING_POSITION[1])
+            return True
+        else:
+            return False
+
+    def pos_reset(self):
+
+        self.setpos(STARTING_POSITION[0], STARTING_POSITION[1])
