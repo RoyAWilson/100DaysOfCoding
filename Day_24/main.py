@@ -14,9 +14,9 @@ with open(r'./Names/invited_names.txt') as names:
 for i in range(len(text_list)):
     if text_list[i] == 'Dear [name],\n':
         for names in names_list:
-            text_list[i] = f'Dear {names}'
+            text_list[i] = f'Dear {names.strip()},\n'
             # print(text_list)
-            with open(f'./ReadyToSend/{names[:-2]}.txt', 'w') as new_letters:
+            with open(f'./ReadyToSend/{names.strip()}.txt', 'w') as new_letters:
                 new_letters.writelines(text_list)
 
 # Done without watcing lecture.
