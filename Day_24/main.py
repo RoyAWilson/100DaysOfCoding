@@ -20,3 +20,5 @@ for i in range(len(text_list)):
                 new_letters.writelines(text_list)
 
 # Done without watcing lecture.
+# Tutor imported the letter text as a simple string and used
+# the string replace method, probably a better idea than mine.
