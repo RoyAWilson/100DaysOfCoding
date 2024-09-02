@@ -76,3 +76,13 @@ class Snake():
         '''
         if self.HEAD.heading() != self.LEFT:
             self.HEAD.setheading(self.RIGHT)
+
+    def snake_reset(self):
+        for segs in self.segments:
+            segs.goto(1000, 1000)
+            # Don't like that they are being seng to a location far off screen, could have memory implications
+            # Apparently tutles cannot be removed but can add them to a reuse list after hiding them
+
+        self.segments.clear()
+        self.create_snake()
+        self.HEAD = self.segments[0]
